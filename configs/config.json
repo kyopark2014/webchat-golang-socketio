@@ -1,0 +1,11 @@
+{
+    "Logging": {
+        "Enable": true,
+        "Level": "DEBUG"
+    },
+    "GracefulTermTimeMillis": 500,
+    "ChatConfig": {
+        "Host": "10.253.69.155",
+        "Port": 4000
+    }
+  }
