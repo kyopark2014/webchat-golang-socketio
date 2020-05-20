@@ -15,12 +15,13 @@ $ docker build -t webchat-golang:v1 .
 ```
 
 ### Result
-#### PUBSUB is easy to manage message sending and receiving
-#### Participant lists are listed on the top
-#### User name is updated automatically without duplication
+- PUBSUB is easy to manage message sending and receiving
 
-![image](https://user-images.githubusercontent.com/52392004/82474512-1e60f080-9b06-11ea-93e5-404a20c1542f.png)
+- Participant lists are listed on the top
 
+- User name is updated automatically without duplication
+
+![image](https://user-images.githubusercontent.com/52392004/82476740-764d2680-9b09-11ea-8b52-8a0de1359c01.png)
 
 ### Data Structure
 
