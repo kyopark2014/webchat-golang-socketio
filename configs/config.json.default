@@ -5,7 +5,7 @@
     },
     "GracefulTermTimeMillis": 500,
     "ChatServer": {
-        "Host": "10.253.69.155",
+        "Host": "localhost",
         "Port": 4000
     }
   }
