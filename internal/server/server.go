@@ -3,6 +3,7 @@ package server
 import (
 	"container/list"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"time"
 	"webchat-basedon-pubsub/internal/config"
@@ -55,6 +56,8 @@ func InitServer(conf *config.AppConfig) error {
 
 	userMap := make(map[string]string) // hashmap to memorize the pair of socket id and user id
 
+	var userStr string // participant list
+
 	server.On("connection", func(so socketio.Socket) {
 		log.D("connected... %v", so.Id())
 
@@ -83,9 +86,16 @@ func InitServer(conf *config.AppConfig) error {
 			log.D("disconnected... %v", so.Id())
 
 			user := userMap[so.Id()]
+			delete(userMap, so.Id())
 
 			Leave(user) // left notifcation
 			s.Cancel()
+
+			// update participant lists
+			str := getParticipantList(userMap)
+			userStr = str
+			log.D("Update Participantlist: %v", userStr)
+			so.Emit("participant", userStr)
 		})
 
 		go func() {
@@ -94,6 +104,14 @@ func InitServer(conf *config.AppConfig) error {
 				case event := <-s.New: // send event to browser
 					log.D("sending event to browsers: %v %v %v %v (%v)", event.EvtType, event.User, event.Timestamp, event.Text, so.Id())
 					so.Emit("chat", event)
+
+					// update participant lists
+					if event.EvtType == "join" || event.EvtType == "leave" {
+						str := getParticipantList(userMap)
+						userStr = str
+						log.D("Update Participantlist: %v", userStr)
+						so.Emit("participant", userStr)
+					}
 
 				case msg := <-newMessages: // received message from browser
 					var newMSG Message
@@ -114,7 +132,7 @@ func InitServer(conf *config.AppConfig) error {
 		w.Header().Set("Access-Control-Allow-Credentials", "true")
 
 		// address
-		r.RemoteAddr = "10.253.69.155"
+		r.RemoteAddr = conf.ChatConfig.Host
 		log.I("Address: %v", r.RemoteAddr)
 
 		server.ServeHTTP(w, r)
@@ -122,9 +140,8 @@ func InitServer(conf *config.AppConfig) error {
 
 	http.Handle("/", http.FileServer(http.Dir("./asset")))
 
-	log.I("Serving at %v:%v", conf.ChatInfo.Host, conf.ChatInfo.Port)
-	//port := ":" + conf.ChatInfo.Port
-	log.E("%v", http.ListenAndServe(":4000", nil))
+	log.I("Serving at %v:%v", conf.ChatConfig.Host, conf.ChatConfig.Port)
+	log.E("%v", http.ListenAndServe(fmt.Sprintf(":%v", conf.ChatConfig.Port), nil))
 
 	return err
 }
@@ -218,4 +235,21 @@ func (s Subscription) Cancel() {
 			return
 		}
 	}
+}
+
+func getParticipantList(userMap map[string]string) string {
+	length := len(userMap)
+	cnt := 1
+
+	var userStr string
+	for _, userName := range userMap {
+		if length == cnt {
+			userStr += userName
+		} else {
+			userStr += (userName + ", ")
+		}
+		cnt++
+	}
+
+	return userStr
 }

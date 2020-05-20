@@ -5,7 +5,7 @@
     },
     "GracefulTermTimeMillis": 500,
     "ChatConfig": {
-        "Host": "10.253.69.155",
+        "Host": "192.168.0.12",
         "Port": 4000
     }
   }

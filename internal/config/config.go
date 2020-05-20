@@ -23,16 +23,14 @@ type AppConfig struct {
 	Logging struct {
 		Enable bool   `json:"Enable"`
 		Level  string `json:"Level"`
+		Host   string `json:"Host"`
 	} `json:"Logging"`
 
 	GracefulTermTimeMillis int64
-	ChatInfo               ChatConfig
-}
-
-// ChatConfig contains the information of the chat server
-type ChatConfig struct {
-	Host string `json:"Host"`
-	Port int    `json:"Port"`
+	ChatConfig             struct {
+		Host string `json:"Host"`
+		Port int    `json:"Port"`
+	} `json:"ChatConfig"`
 }
 
 // GetInstance returns the pointer to the singleton instance of Config

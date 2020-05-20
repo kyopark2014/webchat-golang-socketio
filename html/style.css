@@ -39,6 +39,17 @@ h2{
     color: #575ed8;
 }
 
+#participantList p{
+    padding: 14px 0px;
+    margin: 0 20px;
+    border-bottom: 1px solid #aa2323;
+    color: #555;
+}
+
+#participantList strong{
+    color: #575ed8;
+}
+
 label{
     box-sizing: border-box;
     display: block;
