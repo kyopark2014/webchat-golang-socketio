@@ -2,14 +2,16 @@
 Web chat server and client based on PUBSUB
 
 ### RUN
+
 ```c
 $ go get github.com/nkovacs/go-socket.io 
 $ go run main.go
-```c
+```
 
 ### Docker
 
 Docker Build
+
 ```c
 $ docker build -t webchat-golang:v1 .
 ```
