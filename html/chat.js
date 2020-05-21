@@ -64,12 +64,18 @@ socket.on('chat', function(data){
     var date = new Date(data.Timestamp * 1000);
     var timestr = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
   
-    if(data.EvtType == 'join')
-        output.innerHTML += '<p>' + data.User + ' was joined   ' + '<strong>('+ timestr+')</strong></p>';
-    else if(data.EvtType == 'leave')
-        output.innerHTML += '<p>' + data.User + ' was left   ' + '<strong>('+ timestr+')</strong></p>';
-    else if(data.EvtType == 'message')
-        output.innerHTML += '<p><strong>'+ data.User  + ': </strong>' + data.Text +'     <strong>('+ timestr+')</strong></p>';       
+    if(data.EvtType == 'join' && data.User != '')
+        output.innerHTML += '<p>' + data.User + ' was joined </p>';
+    else if(data.EvtType == 'leave' && data.User != '')
+        output.innerHTML += '<p>' + data.User + ' was left </p>';
+    else if(data.EvtType == 'message') {
+        if(data.User == userID)
+            output.innerHTML += '<div style="display: flex; justify-content: flex-end"><p>'+ data.Text +'     <strong>('+ timestr+')</strong></p></div>';      
+        else 
+            output.innerHTML += '<p><strong>' + data.User  + ': </strong>' + data.Text +'     <strong>('+ timestr+')</strong></p>';      
+    }
+        
+    output.scrollIntoView(false);
   });
 
 // Listen for events 

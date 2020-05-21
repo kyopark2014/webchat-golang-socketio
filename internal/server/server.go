@@ -72,10 +72,10 @@ func InitServer(conf *config.AppConfig) error {
 			userMap[so.Id()] = user
 
 			// if there are archived events
-			//	for _, event := range s.Archive {
-			//	log.D("archived event: %v %v %v %v", event.EvtType, event.User, event.Timestamp, event.Text)
-			//	so.Emit("chat", event)
-			// }
+			for _, event := range s.Archive {
+				log.D("archived event: %v %v %v %v", event.EvtType, event.User, event.Timestamp, event.Text)
+				so.Emit("chat", event)
+			}
 		})
 
 		so.On("chat", func(msg string) {
@@ -173,7 +173,7 @@ func Chatroom() {
 			}
 
 			// at least 5 events were stored
-			if archive.Len() >= 5 {
+			if archive.Len() >= 1000 {
 				archive.Remove(archive.Front())
 			}
 

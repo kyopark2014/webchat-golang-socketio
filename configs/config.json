@@ -4,8 +4,8 @@
         "Level": "DEBUG"
     },
     "GracefulTermTimeMillis": 500,
-    "ChatConfig": {
-        "Host": "192.168.0.12",
+    "ChatServer": {
+        "Host": "localhost",
         "Port": 4000
     }
   }
