@@ -21,7 +21,7 @@ $ docker build -t webchat-golang:v1 .
 
 - User name is updated automatically without duplication
 
-![image](https://user-images.githubusercontent.com/52392004/82476740-764d2680-9b09-11ea-8b52-8a0de1359c01.png)
+![image](https://user-images.githubusercontent.com/52392004/82513003-b255ab00-9b4c-11ea-8ef0-5f22cf872c11.png)
 
 ### Data Structure
 
