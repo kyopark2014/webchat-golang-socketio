@@ -172,7 +172,7 @@ func Chatroom() {
 				subscriber <- event
 			}
 
-			// at least 5 events were stored
+			// at least 1000 events were stored
 			if archive.Len() >= 1000 {
 				archive.Remove(archive.Front())
 			}
