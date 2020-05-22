@@ -16,33 +16,6 @@ func init() {
 	log = logger.NewLogger("webchat")
 }
 
-var (
-	subscribe   = make(chan (chan<- Subscription), 10)
-	unsubscribe = make(chan (<-chan Event), 10)
-	publish     = make(chan Event, 10)
-)
-
-// Event is to define the event
-type Event struct {
-	EvtType   string
-	User      string
-	Timestamp int
-	Text      string
-}
-
-// Subscription is to manage subscribe events
-type Subscription struct {
-	Archive []Event
-	New     <-chan Event
-}
-
-// Message is the data structure of messages
-type Message struct {
-	User      string
-	Timestamp int
-	Message   string
-}
-
 func main() {
 	log.I("Starting service ...")
 
