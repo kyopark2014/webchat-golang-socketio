@@ -1,5 +1,6 @@
-# webchat-basedon-pubsub
-Web chat server and client based on PUBSUB
+# webchat-golang-socket.io
+It shows chat application server and client based on socket.io.
+The server is using golang to support massive traffic in a chat service.
 
 ### RUN
 
@@ -17,7 +18,7 @@ $ docker build -t webchat-golang:v1 .
 ```
 
 ### Result
-- PUBSUB is easy to manage message sending and receiving
+- socket.io provide stable connection between server and client
 
 - Participant lists are listed on the top
 
