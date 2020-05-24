@@ -1,4 +1,4 @@
-module webchat-basedon-pubsub
+module webchat-golang-socketio
 
 go 1.13
 

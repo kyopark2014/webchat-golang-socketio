@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"net/http"
 	"time"
-	"webchat-basedon-pubsub/internal/config"
-	"webchat-basedon-pubsub/internal/logger"
+	"webchat-golang-socketio/internal/config"
+	"webchat-golang-socketio/internal/logger"
 
 	socketio "github.com/nkovacs/go-socket.io"
 )

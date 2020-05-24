@@ -5,9 +5,9 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
-	"webchat-basedon-pubsub/internal/config"
-	"webchat-basedon-pubsub/internal/logger"
-	"webchat-basedon-pubsub/internal/server"
+	"webchat-golang-socketio/internal/config"
+	"webchat-golang-socketio/internal/logger"
+	"webchat-golang-socketio/internal/server"
 )
 
 var log *logger.Logger

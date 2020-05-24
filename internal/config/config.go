@@ -3,7 +3,7 @@ package config
 import (
 	"encoding/json"
 	"io/ioutil"
-	"webchat-basedon-pubsub/internal/logger"
+	"webchat-golang-socketio/internal/logger"
 )
 
 // Config is the only one instance holding configuration
