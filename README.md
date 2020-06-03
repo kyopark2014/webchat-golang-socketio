@@ -1,6 +1,9 @@
 # webchat-golang-socket.io
-It shows chat application server and client based on socket.io.
-The server is using golang to support massive traffic in a chat service.
+It shows a chat application in which socket.io is used to connect server and client.
+Also, there is no difference for 1-to-1 and groupchat since it is based on channel communication.
+
+The server has a strangth to support massive traffics where the number of members is huge in a chatroom.
+It is different with mobile text application since delivery and display notifications are not required since all members basically show a chatroom together as well as Slack.
 
 ### RUN
 
