@@ -125,7 +125,6 @@ server.On("connection", func(so socketio.Socket) {
 
 			// if there are archived events
 			for _, event := range s.Archive {
-				log.D("archived event: %v %v %v %v", event.EvtType, event.User, event.Timestamp, event.Text)
 				so.Emit("chat", event)
 			}
 		})
@@ -154,7 +153,6 @@ server.On("connection", func(so socketio.Socket) {
 			for {
 				select {
 				case event := <-s.New: // send event to browser
-					log.D("sending event to browsers: %v %v %v %v (%v)", event.EvtType, event.User, event.Timestamp, event.Text, so.Id())
 					so.Emit("chat", event)
 
 					// update participant lists
@@ -169,7 +167,6 @@ server.On("connection", func(so socketio.Socket) {
 					var newMSG Message
 					json.Unmarshal([]byte(msg), &newMSG)
 
-					log.D("receiving message from browser: %v %v %v (%v)", newMSG.User, newMSG.Timestamp, newMSG.Message, so.Id())
 					Say(newMSG)
 				}
 			}
