@@ -13,8 +13,6 @@ $ go get github.com/nkovacs/go-socket.io
 $ go run main.go
 ```
 
-### Docker
-
 Docker Build
 
 ```c
@@ -29,6 +27,7 @@ $ docker build -t webchat-golang:v1 .
 - User name is updated automatically without duplication
 
 ![image](https://user-images.githubusercontent.com/52392004/82513003-b255ab00-9b4c-11ea-8ef0-5f22cf872c11.png)
+
 
 ### Data Structure
 
@@ -58,7 +57,6 @@ type Message struct {
 	Message   string
 }
 ```
-
 
 #### Chatroom Management
 ```go
@@ -190,6 +188,7 @@ func Join(user string) {
 }
 ```
 
+#### Leave
 ```go
 func Leave(user string) {
 	timestamp := time.Now().Unix()
@@ -197,8 +196,6 @@ func Leave(user string) {
 }
 ```
 
-#### Leave
-```go
 
 
 
