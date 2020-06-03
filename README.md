@@ -1,6 +1,7 @@
 # webchat-golang-socket.io
 It shows a chat application in which socket.io is used to connect server and client.
 Also, there is no difference for 1-to-1 and groupchat since it is based on channel communication.
+In this project, PUBSUB structure was deployed to support Say, Join and Leave.
 
 The server has a strangth to support massive traffics where the number of members is huge in a chatroom.
 It is different with mobile text application since delivery and display notifications are not required since all members basically show a chatroom together as well as Slack.
@@ -106,6 +107,104 @@ func Chatroom() {
 	}
 }
 ```
+
+#### Channel Management
+```go
+server.On("connection", func(so socketio.Socket) {
+		log.D("connected... %v", so.Id())
+
+		newMessages := make(chan string)
+
+		s := Subscribe()
+
+		so.On("join", func(user string) {
+			log.D("Join...%v (%v)", user, so.Id())
+
+			Join(user) // Join notification
+			userMap[so.Id()] = user
+
+			// if there are archived events
+			for _, event := range s.Archive {
+				log.D("archived event: %v %v %v %v", event.EvtType, event.User, event.Timestamp, event.Text)
+				so.Emit("chat", event)
+			}
+		})
+
+		so.On("chat", func(msg string) {
+			newMessages <- msg
+		})
+
+		so.On("disconnection", func() {
+			log.D("disconnected... %v", so.Id())
+
+			user := userMap[so.Id()]
+			delete(userMap, so.Id())
+
+			Leave(user) // left notifcation
+			s.Cancel()
+
+			// update participant lists
+			str := getParticipantList(userMap)
+			userStr = str
+			log.D("Update Participantlist: %v", userStr)
+			so.Emit("participant", userStr)
+		})
+
+		go func() {
+			for {
+				select {
+				case event := <-s.New: // send event to browser
+					log.D("sending event to browsers: %v %v %v %v (%v)", event.EvtType, event.User, event.Timestamp, event.Text, so.Id())
+					so.Emit("chat", event)
+
+					// update participant lists
+					if event.EvtType == "join" || event.EvtType == "leave" {
+						str := getParticipantList(userMap)
+						userStr = str
+						log.D("Update Participantlist: %v", userStr)
+						so.Emit("participant", userStr)
+					}
+
+				case msg := <-newMessages: // received message from browser
+					var newMSG Message
+					json.Unmarshal([]byte(msg), &newMSG)
+
+					log.D("receiving message from browser: %v %v %v (%v)", newMSG.User, newMSG.Timestamp, newMSG.Message, so.Id())
+					Say(newMSG)
+				}
+			}
+		}()
+	})
+```
+
+#### Join
+```go
+func Join(user string) {
+	timestamp := time.Now().Unix()
+	publish <- NewEvent("join", user, int(timestamp), "")
+}
+```
+
+#### Say
+```go
+func Join(user string) {
+	timestamp := time.Now().Unix()
+	publish <- NewEvent("join", user, int(timestamp), "")
+}
+```
+
+```go
+func Leave(user string) {
+	timestamp := time.Now().Unix()
+	publish <- NewEvent("leave", user, int(timestamp), "")
+}
+```
+
+#### Leave
+```go
+
+
+
 
 #### Troubleshooting - CORS
 In order to excape CORS, the header of Access-Control-Allow-Origin was appended as bellow.
