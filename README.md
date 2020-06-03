@@ -1,6 +1,6 @@
 # webchat-golang-socket.io
 It shows a chat application in which socket.io is used to connect server and client.
-Also, there is no difference for 1-to-1 and groupchat since it is based on channel communication.
+Also, It supports 1-to-1 and groupchat using channel based communication.
 In this project, PUBSUB structure was deployed to support Say, Join and Leave.
 
 The server has a strangth to support massive traffics where the number of members is huge in a chatroom.
